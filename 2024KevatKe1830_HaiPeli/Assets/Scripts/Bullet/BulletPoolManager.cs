@@ -36,6 +36,10 @@ public class BulletPoolManager : MonoBehaviour
         }
 
         return null;
+   }
 
+   public void ReturnBullet(GameObject bullet){
+        bullet.SetActive(false);
+        bulletPool.Enqueue(bullet);
    }
 }

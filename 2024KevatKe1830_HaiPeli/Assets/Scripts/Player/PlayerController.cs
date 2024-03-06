@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -5,6 +6,7 @@ using UnityEngine.InputSystem;
 
 public class PlayerController : MonoBehaviour
 {
+    public Transform gunTransform;
     public float moveSpeed = 5f;
 
     private Master controls;
@@ -24,6 +26,19 @@ public class PlayerController : MonoBehaviour
         controls.Disable();
     }
 
+    void Update(){
+        Shoot();
+    }
+
+    private void Shoot()
+    {
+        if(controls.Player.Fire.triggered){
+            Debug.Log("Ampuu ja sarjaaa");
+            GameObject bullet = BulletPoolManager.Instance.GetBullet();
+            bullet.transform.position = gunTransform.position;
+            bullet.transform.rotation = gunTransform.rotation;
+        }
+    }
 
     void FixedUpdate()
     {
