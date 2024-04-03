@@ -19,6 +19,10 @@ public class PlayerController : MonoBehaviour
         body = GetComponent<Rigidbody2D>();
     }
 
+    void Start(){
+        GameManager.Instance.getPlayer = this;
+    }
+
     void OnEnable() {
         controls.Enable();
     }
