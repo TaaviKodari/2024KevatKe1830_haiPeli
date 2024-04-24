@@ -119,6 +119,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxHealth: 3
+  attackRange: 5
+  attackPower: 1
+  dashSpeed: 10
+  dashDuration: 2
+  attackCooldown: 2
   playerTransform: {fileID: 0}
 --- !u!61 &8606064721719911508
 BoxCollider2D:

@@ -19,7 +19,7 @@ public class Enemy : MonoBehaviour, IDamageable
     
     private Rigidbody2D body;
     public Transform playerTransform;
-
+    Vector2 direction;
 
     void Awake()
     {
@@ -27,12 +27,48 @@ public class Enemy : MonoBehaviour, IDamageable
     }
 
     void OnEnable() {
-        currenHealth = maxHealth;    
+        currenHealth = maxHealth;
+        isDashing = false;    
+    }
+
+    void OnDisable() {
+        StopAllCoroutines();
     }
 
     void FixedUpdate()
     {
         Move();
+        Attack();
+    }
+
+    private void Attack()
+    {
+        if(playerTransform == null)
+        {
+            return;
+        }
+        if(attackTimer > 0){
+            attackTimer -= Time.fixedDeltaTime;
+        }
+        else if(!isDashing && Vector2.Distance(transform.position, playerTransform.position) < attackRange)
+        {
+            StartCoroutine(DashAttack());
+        }
+    }
+
+    IEnumerator DashAttack(){
+        
+        isDashing = true;
+        float startTime = Time.time;
+
+        while(Time.time < startTime + dashDuration){
+            body.velocity = direction * dashSpeed;
+
+            yield return null;
+        }
+        body.velocity = Vector2.zero;
+        isDashing = false;
+        attackTimer = attackCooldown;
     }
 
     private void Move()
@@ -43,7 +79,11 @@ public class Enemy : MonoBehaviour, IDamageable
             return;
         }
 
-        Vector2 direction = (playerTransform.position - transform.position).normalized;
+        if(isDashing == true){
+            return;
+        }
+
+        direction = (playerTransform.position - transform.position).normalized;
         body.MovePosition(body.position + direction * currentSpeed * Time.fixedDeltaTime);
     }
 
