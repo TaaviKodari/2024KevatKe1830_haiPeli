@@ -4,12 +4,14 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public class PlayerController : MonoBehaviour
+public class PlayerController : MonoBehaviour,IDamageable
 {
+    public int maxHealth = 10;
     public Transform gunTransform;
     public float moveSpeed = 5f;
     public Sprite sideSprite;
     public Sprite topSprite;
+    private int currenHealth;
     private SpriteRenderer spriteRenderer;
     private Master controls;
     private Rigidbody2D body;
@@ -24,6 +26,7 @@ public class PlayerController : MonoBehaviour
 
     void Start(){
         GameManager.Instance.getPlayer = this;
+        currenHealth = maxHealth;
     }
 
     void OnEnable() {
@@ -106,5 +109,19 @@ public class PlayerController : MonoBehaviour
         moveInput = controls.Player.Move.ReadValue<Vector2>();
         Vector2 movement = new Vector2(moveInput.x, moveInput.y) * moveSpeed * Time.fixedDeltaTime;
         body.MovePosition(body.position + movement);
+    }
+
+    public void TakeDamage(int damage)
+    {
+       currenHealth -= damage;
+       if(currenHealth <= 0){
+        Die();
+       }
+    }
+
+    public void Die()
+    {
+        //Debug.Log("Ai minä kuoli t: Player *_*");
+        gameObject.SetActive(false);
     }
 }

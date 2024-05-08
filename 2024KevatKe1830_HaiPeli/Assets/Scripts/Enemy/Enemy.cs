@@ -24,6 +24,7 @@ public class Enemy : MonoBehaviour, IDamageable
     void Awake()
     {
         body = GetComponent<Rigidbody2D>();
+       
     }
 
     void OnEnable() {
@@ -103,4 +104,10 @@ public class Enemy : MonoBehaviour, IDamageable
     {
         EnemyPoolManager.Instance.ReturnEnemy(gameObject);
     }
+
+     void OnTriggerEnter2D(Collider2D other){
+        if(other.CompareTag("Player") && isDashing){
+            other.GetComponent<IDamageable>().TakeDamage(1);
+        }
+     }
 }
