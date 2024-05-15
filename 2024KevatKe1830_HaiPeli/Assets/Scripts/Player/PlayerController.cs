@@ -6,6 +6,7 @@ using UnityEngine.InputSystem;
 
 public class PlayerController : MonoBehaviour,IDamageable
 {
+    public GameObject deathParticle;
     public int maxHealth = 10;
     public Transform gunTransform;
     public float moveSpeed = 5f;
@@ -122,6 +123,8 @@ public class PlayerController : MonoBehaviour,IDamageable
     public void Die()
     {
         //Debug.Log("Ai minä kuoli t: Player *_*");
+        Instantiate(deathParticle,transform.position, Quaternion.identity);
         gameObject.SetActive(false);
+        GameManager.Instance.ChangeGameState(GameState.GameOver);
     }
 }

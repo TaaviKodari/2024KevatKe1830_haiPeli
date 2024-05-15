@@ -1,10 +1,11 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using UnityEngine.SceneManagement;
 public class GameManager : MonoBehaviour
 {
     public static GameManager Instance;
+    public GameState currentState;
     public PlayerController getPlayer{get; set;}
     private void Awake() {
         if(Instance == null){
@@ -25,5 +26,19 @@ public class GameManager : MonoBehaviour
     void Update()
     {
         
+    }
+
+    public void ChangeGameState(GameState newState){
+        currentState = newState;
+        if(currentState == GameState.GameOver){
+            StartCoroutine(GameOverCooldown());
+        }
+    }
+
+    IEnumerator GameOverCooldown(){
+
+        yield return new WaitForSeconds(2);
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+        ChangeGameState(GameState.Gameplay);
     }
 }

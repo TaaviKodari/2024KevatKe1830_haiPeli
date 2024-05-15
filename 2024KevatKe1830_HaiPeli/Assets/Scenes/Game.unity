@@ -361,6 +361,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5da700d6b9e3a7c42944b2d3cf9b3b39, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  deathParticle: {fileID: 621871491820549181, guid: e4f5fe53d6a9f2c4a90e3f4efb0bc53d, type: 3}
+  maxHealth: 10
   gunTransform: {fileID: 714040737}
   moveSpeed: 5
   sideSprite: {fileID: 21300000, guid: 4a2ad7966b886df43bd471a1dce99e3e, type: 3}
@@ -721,6 +723,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 25ab27aa05a329345bbc72c2f0c6f1db, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  currentState: 0
 --- !u!4 &1685285013
 Transform:
   m_ObjectHideFlags: 0
